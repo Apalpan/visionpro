@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>VisionPRO | Cotizador de Obra</title>
+    <meta
+      name="description"
+      content="Cotiza VisionPRO para tu obra: camara en vivo, trazabilidad, timelapse, IA EPP y modulos de productividad."
+    />
+    <link rel="preload" href="assets/visionpro-hero-ai-construction.png" as="image" />
+    <link rel="stylesheet" href="styles.css?v=3" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#inicio" aria-label="VisionPRO inicio">
+        <span class="brand-mark"></span>
+        <span>
+          <strong>VisionPRO</strong>
+          <small>AI Construction Intelligence</small>
+        </span>
+      </a>
+      <nav aria-label="Secciones">
+        <a href="#cotizador">Cotizador</a>
+        <a href="#modulos">Modulos</a>
+        <a href="#alcance">Alcance</a>
+      </nav>
+      <a class="nav-cta" href="#cotizador">Cotizar obra</a>
+    </header>
+
+    <main id="inicio">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-media" aria-hidden="true"></div>
+        <div class="hero-overlay"></div>
+
+        <div class="hero-grid">
+          <div class="hero-copy reveal">
+            <p class="eyebrow">Cotizador interactivo para clientes</p>
+            <h1 id="hero-title">Configura VisionPRO para tu obra y descarga una cotizacion en minutos.</h1>
+            <p class="hero-lead">
+              Selecciona camaras, trazabilidad, timelapse y modulos IA como EPP, seguridad o productividad.
+              La landing recomienda el paquete adecuado y calcula inversion inicial, mensualidad e IGV.
+            </p>
+
+            <div class="hero-actions">
+              <a class="primary-btn" href="#cotizador">Empezar cotizacion</a>
+              <button class="ghost-btn" type="button" id="heroPreset">Ver caso recomendado</button>
+            </div>
+
+            <div class="proof-strip" aria-label="Capacidades principales">
+              <span>Camara en vivo</span>
+              <span>Trazabilidad</span>
+              <span>Timelapse</span>
+              <span>IA EPP</span>
+            </div>
+          </div>
+
+          <aside class="live-panel reveal" aria-label="Resumen dinamico">
+            <div class="panel-top">
+              <span class="status-dot"></span>
+              <strong>Estimacion activa</strong>
+              <small id="heroPlan">VisionPRO 2 camaras</small>
+            </div>
+            <div class="radar-card">
+              <div class="scan-line"></div>
+              <div class="camera-node node-a"></div>
+              <div class="camera-node node-b"></div>
+              <div class="camera-node node-c"></div>
+              <p>Obra conectada</p>
+            </div>
+            <div class="metric-grid">
+              <div>
+                <span>Total inicial</span>
+                <strong id="heroInitial">USD 0</strong>
+              </div>
+              <div>
+                <span>Mensualidad</span>
+                <strong id="heroMonthly">USD 0</strong>
+              </div>
+              <div>
+                <span>Contrato 12m</span>
+                <strong id="heroContract">USD 0</strong>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="calculator-section" id="cotizador">
+        <div class="section-head reveal">
+          <p class="eyebrow">Cotizador de obra</p>
+          <h2>El cliente configura su necesidad y recibe una propuesta adecuada.</h2>
+          <p>
+            Usa los presets para partir rapido o ajusta cada variable. Los valores son referenciales y
+            quedan listos para descargar como cotizacion HTML.
+          </p>
+        </div>
+
+        <div class="calculator-shell">
+          <form class="config-card reveal" id="quoteForm">
+            <div class="form-row two">
+              <label>
+                Cliente o empresa
+                <input id="clientName" type="text" value="PDK" autocomplete="organization" />
+              </label>
+              <label>
+                Proyecto u obra
+                <input id="projectName" type="text" value="Ascent" autocomplete="off" />
+              </label>
+            </div>
+
+            <div class="preset-row" aria-label="Escenarios rapidos">
+              <button type="button" class="preset active" data-preset="ascent">PDK Ascent</button>
+              <button type="button" class="preset" data-preset="base">Trazabilidad base</button>
+              <button type="button" class="preset" data-preset="security">Seguridad IA</button>
+              <button type="button" class="preset" data-preset="productivity">Productividad</button>
+              <button type="button" class="preset" data-preset="complete">Obra completa</button>
+            </div>
+
+            <div class="range-grid">
+              <div class="range-box">
+                <div class="range-label">
+                  <span>Camaras nuevas</span>
+                  <strong id="newCamerasLabel">2</strong>
+                </div>
+                <input id="newCameras" type="range" min="0" max="12" value="2" />
+              </div>
+              <div class="range-box">
+                <div class="range-label">
+                  <span>Camaras existentes</span>
+                  <strong id="existingCamerasLabel">0</strong>
+                </div>
+                <input id="existingCameras" type="range" min="0" max="12" value="0" />
+              </div>
+              <div class="range-box">
+                <div class="range-label">
+                  <span>Duracion contrato</span>
+                  <strong><span id="monthsLabel">12</span> meses</strong>
+                </div>
+                <input id="months" type="range" min="3" max="24" step="3" value="12" />
+              </div>
+              <div class="range-box">
+                <div class="range-label">
+                  <span>Descuento inicial</span>
+                  <strong><span id="discountLabel">0</span>%</strong>
+                </div>
+                <input id="discount" type="range" min="0" max="20" step="1" value="0" />
+              </div>
+            </div>
+
+            <div class="option-line">
+              <label class="toggle-line">
+                <input id="edgeKit" type="checkbox" checked />
+                <span></span>
+                Kit edge AI, NVR, red y almacenamiento
+              </label>
+              <label class="toggle-line">
+                <input id="implementation" type="checkbox" checked />
+                <span></span>
+                Implementacion, QA y configuracion inicial
+              </label>
+            </div>
+
+            <div class="module-head" id="modulos">
+              <div>
+                <p class="eyebrow">Modulos IA</p>
+                <h3>Selecciona lo que la obra necesita</h3>
+              </div>
+              <button class="text-btn" type="button" id="clearModules">Limpiar IA</button>
+            </div>
+
+            <div class="module-grid" id="moduleGrid"></div>
+          </form>
+
+          <aside class="summary-card reveal" aria-live="polite">
+            <div class="summary-head">
+              <span id="fitBadge">Recomendado</span>
+              <h3 id="recommendedPlan">VisionPRO 2 camaras</h3>
+              <p id="recommendationText">Ideal para una obra con trazabilidad visual, camara en vivo, timelapse e IA EPP.</p>
+            </div>
+
+            <div class="total-stack">
+              <div class="big-number">
+                <span>Total inicial con IGV</span>
+                <strong id="initialWithTax">USD 0</strong>
+              </div>
+              <div class="mini-numbers">
+                <div>
+                  <span>Mensualidad</span>
+                  <strong id="monthlyTotal">USD 0</strong>
+                </div>
+                <div>
+                  <span>Total contrato</span>
+                  <strong id="contractWithTax">USD 0</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="breakdown">
+              <div><span>Equipos</span><strong id="hardwareTotal">USD 0</strong></div>
+              <div><span>Implementacion</span><strong id="implementationTotal">USD 0</strong></div>
+              <div><span>Activacion IA</span><strong id="iaSetupTotal">USD 0</strong></div>
+              <div><span>Plataforma mensual</span><strong id="platformMonthly">USD 0</strong></div>
+              <div><span>IA mensual</span><strong id="iaMonthlyTotal">USD 0</strong></div>
+              <div><span>IGV referencial</span><strong>18%</strong></div>
+            </div>
+
+            <div class="actions">
+              <button class="primary-btn full" type="button" id="downloadQuote">Descargar cotizacion</button>
+              <button class="outline-btn full" type="button" id="downloadConfig">Descargar configuracion</button>
+            </div>
+
+            <p class="fineprint">
+              Cotizacion referencial. La propuesta final requiere validar conectividad, energia, ubicacion de camaras y condiciones de obra.
+            </p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="scope-section" id="alcance">
+        <div class="scope-card reveal">
+          <div>
+            <p class="eyebrow">Alcance automatico</p>
+            <h2>Lo que incluye la propuesta seleccionada</h2>
+          </div>
+          <ul id="scopeList"></ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <strong>VisionPRO</strong>
+      <span>Landing cotizador cliente - valores referenciales en USD.</span>
+    </footer>
+
+    <script src="app.js?v=3"></script>
+  </body>
+</html>
