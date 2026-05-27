@@ -17,6 +17,41 @@ const pricing = {
   extraCameraMonthly: 30,
 };
 
+const levels = [
+  {
+    id: "L1",
+    name: "Base Visual",
+    label: "Entrada",
+    range: "1-2 camaras",
+    description: "Camara en vivo, dashboard y trazabilidad visual para comenzar con control de obra.",
+    modules: ["Camara en vivo", "Trazabilidad", "Dashboard"],
+  },
+  {
+    id: "L2",
+    name: "Trazabilidad Plus",
+    label: "Recomendado",
+    range: "2-5 camaras",
+    description: "Suma timelapse, reportes y evidencia descargable para seguimiento ejecutivo.",
+    modules: ["Timelapse", "Reportes", "Historial visual"],
+  },
+  {
+    id: "L3",
+    name: "IA Operativa",
+    label: "Alto valor",
+    range: "3-10 camaras",
+    description: "Activa seguridad, productividad y calidad con eventos IA configurados por zona.",
+    modules: ["EPP", "Intrusion", "Camiones", "Mixers"],
+  },
+  {
+    id: "L4",
+    name: "Enterprise Visual OS",
+    label: "Premium",
+    range: "Multiobra",
+    description: "Integra BIM, resumen inteligente y analitica multi-frente para decisiones de gerencia.",
+    modules: ["BIM", "LLM", "Analitica premium"],
+  },
+];
+
 const modules = [
   {
     id: "U01",
@@ -25,6 +60,8 @@ const modules = [
     setup: 250,
     monthly: 60,
     focus: "Seguridad",
+    category: "Seguridad",
+    level: "IA Operativa",
     description: "Detecta falta de casco o EPP y deja evidencia visual para supervision HSE.",
     scope: "Eventos de EPP, evidencia visual, resumen por periodo y soporte de calibracion.",
   },
@@ -35,6 +72,8 @@ const modules = [
     setup: 120,
     monthly: 30,
     focus: "Trazabilidad",
+    category: "Trazabilidad",
+    level: "Trazabilidad Plus",
     description: "Genera avance visual por periodo, hito o frente de obra.",
     scope: "Secuencias timelapse descargables y visualizacion de avance.",
   },
@@ -45,6 +84,8 @@ const modules = [
     setup: 150,
     monthly: 50,
     focus: "Reporting",
+    category: "Reporting",
+    level: "Trazabilidad Plus",
     description: "Convierte evidencias y eventos en reporte diario o semanal.",
     scope: "Reporte automatico con hallazgos, fotos y KPIs operativos.",
   },
@@ -55,6 +96,8 @@ const modules = [
     setup: 320,
     monthly: 60,
     focus: "Seguridad",
+    category: "Seguridad",
+    level: "IA Operativa",
     description: "Monitorea zonas restringidas o de alto riesgo dentro de la obra.",
     scope: "Eventos por zona, evidencia y notificacion de riesgo.",
   },
@@ -65,6 +108,8 @@ const modules = [
     setup: 420,
     monthly: 90,
     focus: "Seguridad",
+    category: "Seguridad",
+    level: "IA Operativa",
     description: "Alerta visual temprana para incidentes criticos.",
     scope: "Registro de alerta, evidencia y criterio de revision humana.",
   },
@@ -75,6 +120,8 @@ const modules = [
     setup: 320,
     monthly: 60,
     focus: "Logistica",
+    category: "Productividad",
+    level: "IA Operativa",
     description: "Controla flujo vehicular, accesos y tiempos de entrada/salida.",
     scope: "Conteo de accesos, horarios y evidencia por porton.",
   },
@@ -85,6 +132,8 @@ const modules = [
     setup: 450,
     monthly: 90,
     focus: "Calidad",
+    category: "Calidad",
+    level: "IA Operativa",
     description: "Registra inicio/fin de vaciado y trazabilidad del concreto.",
     scope: "Eventos de mixer, tiempo de ciclo y evidencia de vaciado.",
   },
@@ -95,6 +144,8 @@ const modules = [
     setup: 350,
     monthly: 70,
     focus: "Productividad",
+    category: "Productividad",
+    level: "IA Operativa",
     description: "Mide ocupacion, congestion y uso de vias internas.",
     scope: "Indicadores de ocupacion y alertas por congestion.",
   },
@@ -105,6 +156,8 @@ const modules = [
     setup: 850,
     monthly: 150,
     focus: "Premium",
+    category: "Premium",
+    level: "Enterprise Visual OS",
     description: "Relaciona evidencia visual con zonas, frentes o modelo BIM.",
     scope: "Vistas y evidencias vinculadas a sectores o hitos BIM.",
   },
@@ -115,10 +168,14 @@ const modules = [
     setup: 250,
     monthly: 70,
     focus: "Reporting",
+    category: "Reporting",
+    level: "Enterprise Visual OS",
     description: "Genera resumen ejecutivo de eventos, riesgos y avance.",
     scope: "Resumen IA para gerencia con hallazgos y siguientes acciones.",
   },
 ];
+
+const categories = ["Todos", "Seguridad", "Trazabilidad", "Productividad", "Calidad", "Reporting", "Premium"];
 
 const presets = {
   ascent: {
@@ -180,6 +237,7 @@ const presets = {
 
 const state = {
   activeModules: new Set(["U01", "F01"]),
+  category: "Todos",
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -299,10 +357,15 @@ function recommendationFor(result) {
 
 function renderModules() {
   const grid = $("#moduleGrid");
-  grid.innerHTML = modules
+  const visibleModules = state.category === "Todos" ? modules : modules.filter((module) => module.category === state.category);
+  grid.innerHTML = visibleModules
     .map(
       (module) => `
         <button class="module-card ${state.activeModules.has(module.id) ? "active" : ""}" type="button" data-module="${module.id}">
+          <div class="module-tags">
+            <span>${module.category}</span>
+            <span>${module.level}</span>
+          </div>
           <strong>${module.name}</strong>
           <p>${module.description}</p>
           <div class="module-meta">
@@ -322,7 +385,39 @@ function renderModules() {
       renderModules();
       update();
     });
+    });
+}
+
+function renderCategories() {
+  const tabs = $("#categorias");
+  tabs.innerHTML = categories
+    .map((category) => `<button class="${state.category === category ? "active" : ""}" type="button" data-category="${category}">${category}</button>`)
+    .join("");
+
+  $$(".category-tabs button").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.category = button.dataset.category;
+      renderCategories();
+      renderModules();
+    });
   });
+}
+
+function renderLevels() {
+  const grid = $("#levelGrid");
+  grid.innerHTML = levels
+    .map(
+      (level, index) => `
+        <article class="level-card">
+          <div class="level-code">${String(index + 1).padStart(2, "0")} / ${level.label}</div>
+          <h3>${level.name}</h3>
+          <p>${level.description}</p>
+          <div class="level-range">${level.range}</div>
+          <div class="level-modules">${level.modules.map((module) => `<span>${module}</span>`).join("")}</div>
+        </article>
+      `,
+    )
+    .join("");
 }
 
 function renderScope(result) {
@@ -511,6 +606,8 @@ $("#downloadQuote").addEventListener("click", downloadQuote);
 $("#downloadConfig").addEventListener("click", downloadConfig);
 
 renderModules();
+renderCategories();
+renderLevels();
 update();
 initReveal();
 

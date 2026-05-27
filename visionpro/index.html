@@ -21,8 +21,9 @@
         </span>
       </a>
       <nav aria-label="Secciones">
+        <a href="#niveles">Niveles</a>
         <a href="#cotizador">Cotizador</a>
-        <a href="#modulos">Modulos</a>
+        <a href="#categorias">Categorias</a>
         <a href="#alcance">Alcance</a>
       </nav>
       <a class="nav-cta" href="#cotizador">Cotizar obra</a>
@@ -83,6 +84,21 @@
               </div>
             </div>
           </aside>
+        </div>
+      </section>
+
+      <section class="brand-system" id="niveles">
+        <div class="brand-grid">
+          <div class="brand-intro reveal">
+            <p class="eyebrow">VisionPRO brand system v0.1</p>
+            <h2>Inteligencia visual de obra organizada por nivel, evidencia y categoria IA.</h2>
+            <p>
+              La experiencia separa lo esencial de lo avanzado: primero trazabilidad y camara en vivo,
+              luego timelapse, seguridad IA, productividad, calidad y analitica premium.
+            </p>
+          </div>
+
+          <div class="level-grid reveal" id="levelGrid"></div>
         </div>
       </section>
 
@@ -168,6 +184,8 @@
               </div>
               <button class="text-btn" type="button" id="clearModules">Limpiar IA</button>
             </div>
+
+            <div class="category-tabs" id="categorias" aria-label="Categorias de modulos IA"></div>
 
             <div class="module-grid" id="moduleGrid"></div>
           </form>

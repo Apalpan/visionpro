@@ -28,6 +28,23 @@ Luego abrir:
 http://127.0.0.1:8087/
 ```
 
+## Flujo de iteracion
+
+Ver el playbook:
+
+```text
+docs/VIBE_DEPLOY.md
+```
+
+Resumen rapido:
+
+```powershell
+cd "D:\AP\AP_Codex\G+ VisionPRO\github\visionpro"
+git add .
+git commit -m "Update VisionPRO landing"
+git push
+```
+
 ## Despliegue
 
 1. Crear un repositorio en GitHub llamado `visionpro`.
